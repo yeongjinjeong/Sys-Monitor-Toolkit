@@ -1,3 +1,4 @@
+#include "System/include/System.h"
 #include "Process/include/ProcessManager.h"
 #include <iostream>
 #include <memory>
@@ -13,6 +14,7 @@ void showMainMenu() {
 
 int main() {
     int choice;
+    std::unique_ptr<System> systemManager;
     std::unique_ptr<ProcessManager> processManager;
 
     while (true) {
@@ -27,7 +29,7 @@ int main() {
                 processManager->run();
                 break;
             case 2:
-                std::cout << "Network Management - Not implemented yet\n";
+                systemManager->run();
                 break;
             case 3:
                 std::cout << "Storage Management - Not implemented yet\n";
