@@ -3,8 +3,13 @@
 
 #include <iostream>
 #include <set>
+#include <string>
 #include <boost/asio.hpp>
 #include <boost/asio/ip/address.hpp>
+#include <ifaddrs.h>
+#include <arpa/inet.h>
+#include <net/if.h> 
+#include <stdexcept> 
 
 class NetworkManager {
 private:

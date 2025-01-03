@@ -1,26 +1,59 @@
 #include "Network.h"
 
 using namespace boost::asio;
-using namespace boost::asio::ip;
 
 void NetworkManager::NetworkTools::searchDevices() {
     try {
-        io_context context;
-        udp::resolver resolver(context);
-        udp::resolver::query query(udp::v4(), boost::asio::ip::host_name(), "");
-        auto results = resolver.resolve(query);
+        struct ifaddrs* ifAddrStruct = nullptr;
+        struct ifaddrs* ifa = nullptr;
 
-        std::cout << "Local Network Devices:\n";
-        for (const auto& endpoint : results) {
-            std::cout << "IP Address: " << endpoint.endpoint().address().to_string() << "\n";
-            std::cout << "DNS Name: " << boost::asio::ip::host_name() << "\n";
+        // Get network interfaces
+        if (getifaddrs(&ifAddrStruct) == -1) {
+            throw std::runtime_error("Failed to get network interfaces");
         }
 
-        std::cout << "Additional Network Information:\n";
-        auto host = boost::asio::ip::host_name();
-        auto addr = resolver.resolve(udp::v4(), host, "");
-        for (auto& entry : addr) {
-            std::cout << "Resolved Address: " << entry.endpoint().address().to_string() << "\n";
+        std::cout << "=========================\n";
+        std::cout << "Local Network Devices:\n";
+        std::cout << "=========================\n";
+
+        for (ifa = ifAddrStruct; ifa != nullptr; ifa = ifa->ifa_next) {
+            if (ifa->ifa_addr == nullptr) continue;
+
+            // Check if the interface is UP and supports IPv4
+            if ((ifa->ifa_flags & IFF_UP) && ifa->ifa_addr->sa_family == AF_INET) {
+                char ip[INET_ADDRSTRLEN];
+                char netmask[INET_ADDRSTRLEN];
+                char broadcast[INET_ADDRSTRLEN];
+
+                // Get IPv4 address
+                inet_ntop(AF_INET, &((struct sockaddr_in*)ifa->ifa_addr)->sin_addr, ip, INET_ADDRSTRLEN);
+
+                // Get netmask
+                if (ifa->ifa_netmask) {
+                    inet_ntop(AF_INET, &((struct sockaddr_in*)ifa->ifa_netmask)->sin_addr, netmask, INET_ADDRSTRLEN);
+                } else {
+                    strcpy(netmask, "Unknown");
+                }
+
+                // Get broadcast address
+                if (ifa->ifa_flags & IFF_BROADCAST && ifa->ifa_broadaddr) {
+                    inet_ntop(AF_INET, &((struct sockaddr_in*)ifa->ifa_broadaddr)->sin_addr, broadcast, INET_ADDRSTRLEN);
+                } else {
+                    strcpy(broadcast, "N/A");
+                }
+
+                // Print network interface details
+                std::cout << "Interface: " << ifa->ifa_name << "\n";
+                std::cout << "  IP Address: " << ip << "\n";
+                std::cout << "  Netmask: " << netmask << "\n";
+                std::cout << "  Broadcast: " << broadcast << "\n";
+                std::cout << "-------------------------\n";
+            }
+        }
+
+        // Free the interface list
+        if (ifAddrStruct != nullptr) {
+            freeifaddrs(ifAddrStruct);
         }
     } catch (std::exception& e) {
         std::cerr << "Error in searchDevices: " << e.what() << "\n";

@@ -22,20 +22,32 @@ void NetworkManager::run() {
                 exitProgram = true;
                 break;
             default:
-                std::cout << "Invalid option! Please try again.\n";
+                break;
         }
-
-        std::cout << "-------------------------\n";
     }
 }
 
 int NetworkManager::getUserChoice() {
     int choice;
-    std::cout << "Select an option:\n";
-    std::cout << "1. Local Network Device Search (NetWork_Search)\n";
-    std::cout << "2. Port Scan and Service Identification (NetWork_Port)\n";
-    std::cout << "3. Wi-Fi Network Monitoring (NetWork_Status)\n";
-    std::cout << "0. Exit\n";
-    std::cin >> choice;
-    return choice;
+    while (true) {
+        std::cout << "Select an option:\n";
+        std::cout << "1. Local Network Device Search (NetWork_Search)\n";
+        std::cout << "2. Port Scan and Service Identification (NetWork_Port)\n";
+        std::cout << "3. Wi-Fi Network Monitoring (NetWork_Status)\n";
+        std::cout << "0. Exit\n";
+        std::cout << "Choose an option: ";
+        std::cin >> choice;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input! Please enter a number between 0 and 3.\n";
+            std::cout << "=========================\n";
+        } else if (choice >= 0 && choice <= 3) {
+            return choice;
+        } else {
+            std::cout << "Invalid option! Please enter a number between 0 and 3.\n";
+            std::cout << "=========================\n";
+        }
+    }
 }

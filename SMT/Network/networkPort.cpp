@@ -9,7 +9,9 @@ void NetworkManager::NetworkTools::findUsedPorts() {
         io_context context;
         tcp::acceptor acceptor(context);
 
+        std::cout << "=========================\n";
         std::cout << "Currently Used Ports on Local System:\n";
+        std::cout << "=========================\n";
         for (int port = 1; port <= 65535; ++port) {
             boost::system::error_code ec;
             acceptor.open(tcp::v4(), ec);
@@ -28,4 +30,5 @@ void NetworkManager::NetworkTools::findUsedPorts() {
     } catch (std::exception& e) {
         std::cerr << "Error in findUsedPorts: " << e.what() << "\n";
     }
+    std::cout << "-------------------------\n";
 }

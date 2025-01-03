@@ -9,7 +9,9 @@ void NetworkManager::NetworkTools::monitorWiFi() {
             std::cerr << "Failed to scan Wi-Fi networks. Ensure 'netsh' is accessible.\n";
         }
         #elif __linux__
+        std::cout << "=========================\n";
         std::cout << "Scanning for available Wi-Fi networks (Linux)...\n";
+        std::cout << "=========================\n";
         int result = system("nmcli dev wifi list");
         if (result != 0) {
             std::cerr << "Failed to scan Wi-Fi networks. Ensure 'nmcli' is installed and accessible.\n";
@@ -20,4 +22,5 @@ void NetworkManager::NetworkTools::monitorWiFi() {
     } catch (std::exception& e) {
         std::cerr << "Error in monitorWiFi: " << e.what() << "\n";
     }
+    std::cout << "-------------------------\n";
 }
