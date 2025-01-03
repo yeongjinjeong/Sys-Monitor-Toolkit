@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall
+CXXFLAGS = -Wall -pthread
 TARGET = linuxmanager
 Source = $(wildcard ./Network/*.cpp ./Process/*.cpp ./System/*.cpp) main.cpp
 
