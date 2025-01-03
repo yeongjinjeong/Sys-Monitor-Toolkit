@@ -1,13 +1,14 @@
-#include "System/include/System.h"
-#include "Process/include/ProcessManager.h"
+#include "System/System.h"
+#include "Process/ProcessManager.h"
+#include "Network/Network.h"
 #include <iostream>
 #include <memory>
 
 void showMainMenu() {
     std::cout << "\n=== System Management Tool ===\n"
               << "1. Process Management\n"
-              << "2. Network Management\n"
-              << "3. Storage Management\n"
+              << "2. System Management\n"
+              << "3. Network Management\n"
               << "0. Exit\n"
               << "Choose an option: ";
 }
@@ -16,6 +17,7 @@ int main() {
     int choice;
     std::unique_ptr<System> systemManager;
     std::unique_ptr<ProcessManager> processManager;
+    std::unique_ptr<NetworkManager> networkManager;
 
     while (true) {
         showMainMenu();
@@ -32,7 +34,7 @@ int main() {
                 systemManager->run();
                 break;
             case 3:
-                std::cout << "Storage Management - Not implemented yet\n";
+                networkManager->run();
                 break;
             case 0:
                 std::cout << "Exiting...\n";

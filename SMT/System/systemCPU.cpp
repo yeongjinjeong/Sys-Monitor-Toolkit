@@ -1,6 +1,6 @@
-#include "system.h"
+#include "System.h"
 
-system::float getCPUUsage() {
+float System::getCPUUsage() {
     std::ifstream procStat("/proc/stat");
     std::string line;
     std::getline(procStat, line);

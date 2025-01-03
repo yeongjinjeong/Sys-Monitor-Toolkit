@@ -1,6 +1,6 @@
-#include "system.h"
+#include "System.h"
 
-system::void getMemoryUsage() {
+void System::getMemoryUsage() {
     std::ifstream memInfo("/proc/meminfo");
     std::string line;
     long totalMem = 0, freeMem = 0, availableMem = 0;

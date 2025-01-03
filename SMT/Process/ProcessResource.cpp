@@ -1,5 +1,5 @@
 // 시스템 정보 수집을 위한 헤더 파일들
-#include "../include/ProcessResource.h"
+#include "ProcessResource.h"
 #include <fstream>       // 파일 입출력을 위한 헤더
 #include <sstream>       // 문자열 스트림 처리를 위한 헤더
 #include <iostream>      // 표준 입출력을 위한 헤더

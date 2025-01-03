@@ -1,4 +1,4 @@
-#include "../include/Network.h"
+#include "Network.h"
 
 using namespace boost::asio;
 using namespace boost::asio::ip;

@@ -1,4 +1,4 @@
-#include "../include/Network.h"
+#include "Network.h"
 
 void NetworkManager::NetworkTools::monitorWiFi() {
     try {

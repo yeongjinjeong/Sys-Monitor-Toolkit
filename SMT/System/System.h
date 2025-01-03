@@ -1,4 +1,4 @@
-#progma once
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -24,4 +24,4 @@ public:
             sleep(1);        
         }
     }
-}
+};

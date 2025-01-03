@@ -1,6 +1,6 @@
-#include "system.h"
+#include "System.h"
 
-system::void getDiskUsage(const std::string& path) {
+void System::getDiskUsage(const std::string& path) {
     struct statvfs diskInfo;    
     if (statvfs(path.c_str(), &diskInfo) == 0) {
         unsigned long long totalSpace = diskInfo.f_blocks * diskInfo.f_frsize;
